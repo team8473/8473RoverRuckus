@@ -23,7 +23,7 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kI
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kP;
 
 @TeleOp(name = "GyroTest", group = "Sensor")
-//@Disabled
+@Disabled
 public class GyroTest extends OpMode {
 
     private HardwareZeus zeus = new HardwareZeus();

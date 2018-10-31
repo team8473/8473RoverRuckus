@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.pixy.PixyCam;
 
 @Disabled
 public class HardwareZeus {
@@ -24,8 +23,6 @@ public class HardwareZeus {
     //Sensors
     public PixyCam pixy = null;
     public BNO055IMU imu = null;
-
-    //Servos
 
     //Encoder Variables
     private static final double COUNTS_PER_MOTOR_REV = 350.0;
@@ -88,7 +85,17 @@ public class HardwareZeus {
         servo2.setDirection(Servo.Direction.FORWARD);
 
         //Sensors
-        pixy = hwMap.get(PixyCam.class, "pixy");
+//        pixy = hwMap.get(PixyCam.class, "pixy");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit            = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit            = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile  = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled       = true;
+        parameters.loggingTag           = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
         imu = hwMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
     }
 }
