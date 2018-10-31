@@ -1,26 +1,23 @@
 package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Claw;
-import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Drive;
-import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Lift;
 import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Wait;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.FAST_DRIVE_SPEED;
-//import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.pixy.PixyBlock;
 
 @TeleOp(name = "Driving", group = "Match")
 //@Disabled
 public class RoverRuckusDriving extends OpMode {
 
     private HardwareZeus zeus = new HardwareZeus();
-
     private Wait wait = new Wait();
 
     private int currentPosition = 1;
@@ -30,20 +27,10 @@ public class RoverRuckusDriving extends OpMode {
     private static Position[] position = new Position[] {Position.CLAW_CLOSED, Position.CLAW_OPEN};
     private static Speed[] speeds = new Speed[] {Speed.DRIVE_FAST, Speed.DRIVE_SLOW};
 
-//    private PixyBlock block1;
-
     @Override
     public void init() {
         zeus.init(hardwareMap);
         speed = speeds[currentSpeed];
-    }
-
-    @Override
-    public void init_loop(){
-//        block1 = zeus.pixy.getBiggestBlock(1);
-//        zeus.pixy.getBiggestBlock(1);
-//        telemetry.addData("Block 1", block1.toString());
-//        telemetry.update();
     }
 
     @Override
@@ -76,7 +63,6 @@ public class RoverRuckusDriving extends OpMode {
         zeus.motorLift.setPower(Range.clip(lift, -.6, .6));
 
         if (gamepad2.y) {
-
             zeus.motorLift.setPower(1.0);
         } else if (gamepad2.left_stick_y == 0.0){
             zeus.motorLift.setPower(0);
@@ -119,11 +105,7 @@ public class RoverRuckusDriving extends OpMode {
         }
     }
 
-    @Override
-    public void stop() {
-    }
-
-    private void clawSet (Position position) {
+    private void clawSet (@NonNull Position position) {
         switch (position) {
             case CLAW_OPEN:
                 zeus.servo1.setPosition(CLAW_OPEN);
