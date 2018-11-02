@@ -6,12 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.AutoDrive;
 import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Wait;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.FAST_DRIVE_SPEED;
+import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.RIGHT;
+import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.TURN_SPEED;
 
 @TeleOp(name = "Driving", group = "Match")
 //@Disabled
@@ -31,6 +34,9 @@ public class RoverRuckusDriving extends OpMode {
     public void init() {
         zeus.init(hardwareMap);
         speed = speeds[currentSpeed];
+        telemetry.addData("Servo1", zeus.servo1.getPosition());
+        telemetry.addData("Servo2", zeus.servo2.getPosition());
+        telemetry.update();
     }
 
     @Override

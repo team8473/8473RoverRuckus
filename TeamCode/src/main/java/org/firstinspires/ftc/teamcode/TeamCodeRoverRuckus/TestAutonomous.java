@@ -13,6 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.AutoDrive;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
+import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.RIGHT;
+import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.TURN_SPEED;
 
 @Autonomous (name = "Test", group = "Main")
 @Disabled
@@ -24,7 +26,6 @@ public class TestAutonomous extends LinearOpMode {
 
     private double lastError, integralError;
     private double goalAngle, xGoal;
-    private PixyBlock block1;
 
     private Orientation angles = null;
 
@@ -32,7 +33,6 @@ public class TestAutonomous extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         zeus.init(hardwareMap);
-        auto.runOpMode();
 
         angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         goalAngle = angles.firstAngle;
@@ -46,7 +46,15 @@ public class TestAutonomous extends LinearOpMode {
         waitForStart();
         angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        auto.pixyDrive(DRIVE_SPEED, 20);
+        timer.reset();
+
+        while(timer.seconds() > 2.5){
+            zeus.motorLift.setPower(-0.5);
+        }
+        zeus.motorLift.setPower(0.0);
+
+        auto.encoderTurn(180, RIGHT);
+        auto.pixyDrive(DRIVE_SPEED, -20);
 
         if (angles.firstAngle < -5) {
 //            gyroDrive(DRIVE_SPEED, 10, Whatever angle it needs to be);

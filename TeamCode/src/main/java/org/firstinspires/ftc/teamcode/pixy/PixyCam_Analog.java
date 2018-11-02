@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.pixy;
 
+import android.support.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class PixyCam_Analog  {
     private AnalogInput analogIn_pixy;
 
-    public PixyCam_Analog(HardwareMap hardwareMap) {
+    public PixyCam_Analog(@NonNull HardwareMap hardwareMap) {
         analogIn_pixy       = hardwareMap.analogInput.get("pixy_analog");       // if it doesn't work, try the above
     }
 
