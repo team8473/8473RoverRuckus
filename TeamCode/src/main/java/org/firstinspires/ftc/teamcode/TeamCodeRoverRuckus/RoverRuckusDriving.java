@@ -31,8 +31,7 @@ public class RoverRuckusDriving extends OpMode {
     public void init() {
         zeus.init(hardwareMap);
         speed = speeds[currentSpeed];
-        telemetry.addData("Servo1", zeus.servo1.getPosition());
-        telemetry.addData("Servo2", zeus.servo2.getPosition());
+        telemetry.addData("Yo! What up peeps", "Press that triangle down there to start playing man");
         telemetry.update();
     }
 
