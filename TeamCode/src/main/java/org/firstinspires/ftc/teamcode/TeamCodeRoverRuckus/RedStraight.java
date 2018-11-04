@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.COUNTS_PER_INCH;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.TURN_SPEED;
@@ -38,14 +39,17 @@ public class RedStraight extends LinearOpMode {
         sleep(10);
         zeus.motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         zeus.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        zeus.motorLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        waitForStart();
+
         angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         goalAngle = angles.firstAngle;
-
         gyroDrive(DRIVE_SPEED, 55, goalAngle);
         zeus.servo1.setPosition(CLAW_CLOSED);
         zeus.servo2.setPosition(CLAW_CLOSED);
+        telemetry.addData("Servo Position : ", zeus.servo1.getPosition());
+        telemetry.update();
+        sleep(10000);
     }
 
     public void gyroDrive(double speed,

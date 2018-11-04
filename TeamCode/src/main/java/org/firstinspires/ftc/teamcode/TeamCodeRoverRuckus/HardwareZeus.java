@@ -51,6 +51,9 @@ public class HardwareZeus {
     public static final double CLAW_OPEN = 0.5;
     public static final double CLAW_CLOSED = 1.0;
 
+    //Lift
+    public static final double LIFT_POWER = 0.5;
+
     //Strings
     public static final String RIGHT = "RIGHT";
     public static final String LEFT  = "LEFT";
