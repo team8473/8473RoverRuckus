@@ -35,7 +35,7 @@ public class HardwareZeus {
     private static final double LONG_SQUARED = Math.pow(0.5 * ROBOT_LENGTH, 2.0);
     private static final double SQUARE_ROOT = Math.sqrt(2.0 * (SHORT_SQUARED + LONG_SQUARED));
     public static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER * 3.1415);
-    public static final double DRIVE_SPEED = 0.4;
+    public static final double DRIVE_SPEED = 0.5;
     public static final double FAST_DRIVE_SPEED = 1.0;
     public static final double SLOW_DRIVE_SPEED = 0.4;
     public static final double TURN_SPEED = 0.45;
