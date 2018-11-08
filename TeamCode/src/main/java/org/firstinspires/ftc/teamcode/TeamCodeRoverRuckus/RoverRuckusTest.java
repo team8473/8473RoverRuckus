@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus;
 import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Wait;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_CLOSED;
@@ -14,9 +13,9 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CL
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.FAST_DRIVE_SPEED;
 
-@TeleOp(name = "Driving", group = "Match")
+@TeleOp(name = "TestDriving", group = "Match")
 //@Disabled
-public class RoverRuckusDriving extends OpMode {
+public class RoverRuckusTest extends OpMode {
 
     private HardwareZeus zeus = new HardwareZeus();
     private Wait wait = new Wait();
@@ -79,32 +78,12 @@ public class RoverRuckusDriving extends OpMode {
         right = Range.clip(-right, -1, 1);
 
         if (gamepad1.right_bumper) {
-            switch (currentSpeed) {
-                case 0:
-                    currentSpeed += 1;
-                    speed = speeds[currentSpeed];
-                    break;
-                case 1:
-                    currentSpeed -= 1;
-                    speed = speeds[currentSpeed];
-                    break;
-                default:
-                    break;
-            }
-            wait.waitMilliseconds(250);
-        }
+            zeus.motorRight.setPower(Range.clip(-left, -DRIVE_SPEED, DRIVE_SPEED));
+            zeus.motorLeft.setPower(Range.clip(-right, -DRIVE_SPEED, DRIVE_SPEED));
 
-        switch (speed) {
-            case DRIVE_FAST:
-                zeus.motorRight.setPower(Range.clip(right, -FAST_DRIVE_SPEED, FAST_DRIVE_SPEED));
-                zeus.motorLeft.setPower(Range.clip(left, -FAST_DRIVE_SPEED, FAST_DRIVE_SPEED));
-                break;
-            case DRIVE_SLOW:
-                zeus.motorRight.setPower(Range.clip(right, -DRIVE_SPEED, DRIVE_SPEED));
-                zeus.motorLeft.setPower(Range.clip(left, -DRIVE_SPEED, DRIVE_SPEED));
-                break;
-            default:
-                break;
+        } else {
+            zeus.motorRight.setPower(Range.clip(right, -DRIVE_SPEED, DRIVE_SPEED));
+            zeus.motorLeft.setPower(Range.clip(left, -DRIVE_SPEED, DRIVE_SPEED));
         }
     }
 
