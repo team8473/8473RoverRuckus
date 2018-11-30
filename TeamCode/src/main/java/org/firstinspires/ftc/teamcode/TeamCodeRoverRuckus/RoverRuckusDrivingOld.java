@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 
 import android.support.annotation.NonNull;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -14,9 +15,9 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CL
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.DRIVE_SPEED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.FAST_DRIVE_SPEED;
 
-@TeleOp(name = "Driving", group = "Match")
-//@Disabled
-public class RoverRuckusDriving extends OpMode {
+@TeleOp(name = "Driving")
+@Disabled
+public class RoverRuckusDrivingOld extends OpMode {
 
     private HardwareZeus zeus = new HardwareZeus();
     private Wait wait = new Wait();

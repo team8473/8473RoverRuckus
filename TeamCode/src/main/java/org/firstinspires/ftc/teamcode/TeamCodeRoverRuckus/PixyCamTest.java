@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Pixy Cam Test", group = "Test")
 public class PixyCamTest extends LinearOpMode {
-    private Servo pixyServo = null;
+
     private AnalogInput analogIn_pixy = null;
+    private Servo pixyServo = null;
 
     @Override
     public void runOpMode() throws InterruptedException {

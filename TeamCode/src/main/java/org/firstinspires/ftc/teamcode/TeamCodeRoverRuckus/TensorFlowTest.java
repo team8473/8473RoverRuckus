@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 
 @TeleOp(name = "Tensor Flow Test", group = "Test")
-//@Disabled
+@Disabled
 public class TensorFlowTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";

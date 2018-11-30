@@ -56,7 +56,7 @@ public class GyroTest extends OpMode {
 
     @Override
     public void loop() {
-        angles   = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         zeus.servo1.setPosition((angles.firstAngle + 90.0) / 180.0);
         telemetry.addData("heading", angles.firstAngle);

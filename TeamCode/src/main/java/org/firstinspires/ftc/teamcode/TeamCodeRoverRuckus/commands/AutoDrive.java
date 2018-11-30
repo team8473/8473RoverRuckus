@@ -293,16 +293,16 @@ public class AutoDrive extends LinearOpMode {
         switch(direction){
             case RIGHT:
                 while (angle2 < angles.firstAngle && angles.firstAngle < angle1) {
-                    zeus.motorRight.setPower(TURN_SPEED);
-                    zeus.motorLeft.setPower(-TURN_SPEED);
+                    zeus.motorRight.setPower(speed);
+                    zeus.motorLeft.setPower(-speed);
                 }
                 zeus.motorRight.setPower(0.0);
                 zeus.motorLeft.setPower(0.0);
                 break;
             case LEFT:
                 while (-angle1 < angles.firstAngle && angles.firstAngle < -angle2) {
-                    zeus.motorRight.setPower(-TURN_SPEED);
-                    zeus.motorLeft.setPower(TURN_SPEED);
+                    zeus.motorRight.setPower(-speed);
+                    zeus.motorLeft.setPower(speed);
                 }
                 zeus.motorRight.setPower(0.0);
                 zeus.motorLeft.setPower(0.0);

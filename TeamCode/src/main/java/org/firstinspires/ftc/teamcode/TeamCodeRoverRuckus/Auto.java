@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 import android.support.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -22,6 +23,7 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kI
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kP;
 
 @Autonomous (name = "Auto", group = "Test")
+@Disabled
 public class Auto extends LinearOpMode {
 
     private HardwareZeus zeus = new HardwareZeus();

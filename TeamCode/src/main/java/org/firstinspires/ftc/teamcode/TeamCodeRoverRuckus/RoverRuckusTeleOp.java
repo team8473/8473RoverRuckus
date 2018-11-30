@@ -4,38 +4,52 @@ import android.support.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.commands.Wait;
 
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.CLAW_OPEN;
 
-@TeleOp(name = "DrivingTest", group = "Match")
+@TeleOp(name = "Driving", group = "Match")
 //@Disabled
-public class RoverRuckusDrivingTest extends OpMode {
+public class RoverRuckusTeleOp extends OpMode {
 
     private HardwareZeus zeus = new HardwareZeus();
     private Wait wait = new Wait();
 
-    private double DRIVE_SPEED;
+    private double CURRENT_SPEED;
 
     private int currentPosition = 1;
     private int currentControl = 0;
     private int currentSpeed = 1;
     private Controls control;
-    private Speed speed;
+    private Speeds speed;
 
-    private static Position[] position = new Position[] {Position.CLAW_CLOSED, Position.CLAW_OPEN};
+    private static Positions[] position = new Positions[] {Positions.CLAW_CLOSED, Positions.CLAW_OPEN};
     private static Controls[] controls = new Controls[] {Controls.NORMAL, Controls.INVERTED};
-    private static Speed[] speeds = new Speed[] {Speed.DRIVE_FAST, Speed.DRIVE_SLOW};
+    private static Speeds[] speeds = new Speeds[] {Speeds.DRIVE_FAST, Speeds.DRIVE_SLOW};
 
     @Override
     public void init() {
         zeus.init(hardwareMap);
 
+        zeus.motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        zeus.motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        zeus.imu.startAccelerationIntegration(new Position(), new Velocity(), 10);
+
+        CURRENT_SPEED = HardwareZeus.DRIVE_SPEED;
+
         control = controls[currentControl];
         speed = speeds[currentSpeed];
+
+        telemetry.addData("你好!", "Press > to start");
+        telemetry.update();
+
     }
 
     @Override
@@ -73,12 +87,12 @@ public class RoverRuckusDrivingTest extends OpMode {
 
         switch (control) {
             case NORMAL:
-                zeus.motorRight.setPower(Range.clip(right, -DRIVE_SPEED, DRIVE_SPEED));
-                zeus.motorLeft.setPower(Range.clip(left, -DRIVE_SPEED, DRIVE_SPEED));
+                zeus.motorRight.setPower(Range.clip(right, -CURRENT_SPEED, CURRENT_SPEED));
+                zeus.motorLeft.setPower(Range.clip(left, -CURRENT_SPEED, CURRENT_SPEED));
                 break;
             case INVERTED:
-                zeus.motorRight.setPower(Range.clip(-left, -DRIVE_SPEED, DRIVE_SPEED));
-                zeus.motorLeft.setPower(Range.clip(-right, -DRIVE_SPEED, DRIVE_SPEED));
+                zeus.motorRight.setPower(Range.clip(-left, -CURRENT_SPEED, CURRENT_SPEED));
+                zeus.motorLeft.setPower(Range.clip(-right, -CURRENT_SPEED, CURRENT_SPEED));
                 break;
             default:
                 break;
@@ -89,11 +103,11 @@ public class RoverRuckusDrivingTest extends OpMode {
     private void controlCycle() {
         switch (currentControl) {
             case 0:
-                currentControl += 1;
+                currentControl ++;
                 control = controls[currentControl];
                 break;
             case 1:
-                currentControl -= 1;
+                currentControl --;
                 control = controls[currentControl];
                 break;
             default:
@@ -104,12 +118,12 @@ public class RoverRuckusDrivingTest extends OpMode {
     private void speedCycle() {
         switch (currentSpeed) {
             case 0:
-                currentSpeed += 1;
+                currentSpeed ++;
                 speed = speeds[currentSpeed];
                 speedSet();
                 break;
             case 1:
-                currentSpeed -= 1;
+                currentSpeed --;
                 speed = speeds[currentSpeed];
                 speedSet();
                 break;
@@ -121,10 +135,10 @@ public class RoverRuckusDrivingTest extends OpMode {
     private void speedSet() {
         switch (speed) {
             case DRIVE_FAST:
-                DRIVE_SPEED = HardwareZeus.FAST_DRIVE_SPEED;
+                CURRENT_SPEED = HardwareZeus.FAST_DRIVE_SPEED;
                 break;
             case DRIVE_SLOW:
-                DRIVE_SPEED = HardwareZeus.DRIVE_SPEED;
+                CURRENT_SPEED = HardwareZeus.DRIVE_SPEED;
                 break;
             default:
                 break;
@@ -132,17 +146,17 @@ public class RoverRuckusDrivingTest extends OpMode {
     }
 
     //Claw
-    private void clawSet(@NonNull Position position) {
+    private void clawSet(@NonNull Positions position) {
         switch (position) {
             case CLAW_OPEN:
                 zeus.servo1.setPosition(CLAW_OPEN);
                 zeus.servo2.setPosition(CLAW_OPEN);
-                wait.waitMilliseconds(250);
+                wait.waitMilliseconds(500);
                 break;
             case CLAW_CLOSED:
                 zeus.servo1.setPosition(CLAW_CLOSED);
                 zeus.servo2.setPosition(CLAW_CLOSED);
-                wait.waitMilliseconds(250);
+                wait.waitMilliseconds(500);
                 break;
             default:
                 break;
@@ -151,11 +165,11 @@ public class RoverRuckusDrivingTest extends OpMode {
     private void clawCycle() {
         switch (currentPosition) {
             case 0:
-                currentPosition += 1;
+                currentPosition ++;
                 clawSet(position[currentPosition]);
                 break;
             case 1:
-                currentPosition -= 1;
+                currentPosition --;
                 clawSet(position[currentPosition]);
                 break;
             default:
@@ -163,17 +177,15 @@ public class RoverRuckusDrivingTest extends OpMode {
         }
     }
 
-    private enum Position {
+    private enum Positions {
         CLAW_OPEN, CLAW_CLOSED
-    }
-
-    private enum Speed {
-        DRIVE_FAST, DRIVE_SLOW
     }
 
     private enum Controls {
         NORMAL, INVERTED
     }
 
-
+    private enum Speeds {
+        DRIVE_FAST, DRIVE_SLOW
+    }
 }
