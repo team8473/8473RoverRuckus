@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -21,6 +22,7 @@ public class HardwareZeus {
     //Servos
     public Servo servo1 = null;
     public Servo servo2 = null;
+    public CRServo george = null;
 
     //Sensors
     public BNO055IMU imu = null;
@@ -54,6 +56,9 @@ public class HardwareZeus {
     //Lift
     public static final double LIFT_POWER = 0.5;
 
+    //George
+    public static final double GEORGE_OFF = -0.085;
+
     //Strings
     public static final String RIGHT = "RIGHT";
     public static final String LEFT  = "LEFT";
@@ -84,6 +89,7 @@ public class HardwareZeus {
         //Servo
         servo1 = hwMap.servo.get("servo1");
         servo2 = hwMap.servo.get("servo2");
+        george = hwMap.crservo.get("george");
 
         servo1.setDirection(Servo.Direction.FORWARD);
         servo2.setDirection(Servo.Direction.REVERSE);

@@ -23,7 +23,7 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kI
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kP;
 
 @Autonomous (name = "Auto", group = "Test")
-@Disabled
+//@Disabled
 public class Auto extends LinearOpMode {
 
     private HardwareZeus zeus = new HardwareZeus();
@@ -46,11 +46,13 @@ public class Auto extends LinearOpMode {
         zeus.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
-
+//
 //        encoderTurn(180, RIGHT);
 //        gyroTurn(TURN_SPEED, 180, LEFT);
-        gyroTurnTest(TURN_SPEED, 155, LEFT);
+//        gyroTurnTest(TURN_SPEED, 155, LEFT);
 
+        zeus.george.setPower(-0.085);
+        sleep(10000);
     }
 
     public void encoderTurn(double turnAngle,
