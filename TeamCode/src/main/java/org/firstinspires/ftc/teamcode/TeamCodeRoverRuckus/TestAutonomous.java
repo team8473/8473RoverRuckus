@@ -25,41 +25,24 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kD
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kI;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kP;
 
-@Autonomous (name = "Test", group = "Main")
+@Autonomous (name = "Auto", group = "Main")
 //@Disabled
 public class TestAutonomous extends AutoDrive {
 
     private HardwareZeus zeus = new HardwareZeus();
     private ElapsedTime timer = new ElapsedTime();
-    private AutoDrive auto = new AutoDrive();
 
-    Scanner input = new Scanner(System.in);
-
-    private double lastError, integralError;
-    private double goalAngle, xGoal;
-
-    private Orientation angles = null;
     private Acceleration gravity = null;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         zeus.init(hardwareMap);
 
-        angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         gravity = zeus.imu.getGravity();
-        goalAngle = angles.firstAngle;
-
 
         zeus.motorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         zeus.motorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        System.out.println("Enter Number : ");
-        int number = input.nextInt();
-
-        telemetry.addData("You Entered : ", number);
-        telemetry.update();
 
         waitForStart();
 
@@ -72,7 +55,6 @@ public class TestAutonomous extends AutoDrive {
             telemetry.addData("Hi", gravity.yAccel);
             telemetry.update();
         }
-        sleep(500);
         zeus.motorLift.setPower(0.0);
 
         zeus.motorLeft.setPower(-DRIVE_SPEED);
@@ -96,5 +78,21 @@ public class TestAutonomous extends AutoDrive {
         }
         zeus.motorLeft.setPower(0.0);
         zeus.motorRight.setPower(0.0);
+
+        zeus.runtime.reset();
+        zeus.george.setPower(0.3);
+        while (zeus.runtime.seconds() < 1.0){
+            telemetry.addData("George", "is Moving");
+            telemetry.update();
+        }
+        zeus.george.setPower(-1.0);
+        zeus.runtime.reset();
+        while (zeus.runtime.seconds() < 1.0) {
+            telemetry.addData("George", "is Moving");
+            telemetry.update();
+        }
+        zeus.george.setPower(-0.085);
+        sleep(10000);
+
     }
 }

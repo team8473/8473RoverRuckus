@@ -22,7 +22,7 @@ import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kD
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kI;
 import static org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus.HardwareZeus.kP;
 
-@Autonomous (name = "Auto", group = "Test")
+@Autonomous (name = "Test", group = "Test")
 //@Disabled
 public class Auto extends LinearOpMode {
 
@@ -46,13 +46,12 @@ public class Auto extends LinearOpMode {
         zeus.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
-//
-//        encoderTurn(180, RIGHT);
-//        gyroTurn(TURN_SPEED, 180, LEFT);
-//        gyroTurnTest(TURN_SPEED, 155, LEFT);
+        zeus.motorRight.setPower(0.3);
+        zeus.motorLeft.setPower(0.3);
+        sleep(2000);
+        zeus.motorRight.setPower(0.0);
+        zeus.motorLeft.setPower(0.0);
 
-        zeus.george.setPower(-0.085);
-        sleep(10000);
     }
 
     public void encoderTurn(double turnAngle,

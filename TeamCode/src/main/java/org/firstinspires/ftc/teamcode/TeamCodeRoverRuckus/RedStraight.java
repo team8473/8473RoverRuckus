@@ -43,6 +43,7 @@ public class RedStraight extends LinearOpMode {
         zeus.motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         zeus.motorLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        waitForStart();
 
         angles = zeus.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         goalAngle = angles.firstAngle;

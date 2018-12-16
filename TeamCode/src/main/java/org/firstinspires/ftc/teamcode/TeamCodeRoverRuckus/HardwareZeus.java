@@ -5,6 +5,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,11 +19,12 @@ public class HardwareZeus {
     public DcMotor motorRight = null;
     public DcMotor motorLeft = null;
     public DcMotor motorLift = null;
+    public DcMotor jesus = null;
 
     //Servos
+    public CRServo george = null;
     public Servo servo1 = null;
     public Servo servo2 = null;
-    public CRServo george = null;
 
     //Sensors
     public BNO055IMU imu = null;
@@ -53,9 +55,6 @@ public class HardwareZeus {
     public static final double CLAW_OPEN = 0.5;
     public static final double CLAW_CLOSED = 1.0;
 
-    //Lift
-    public static final double LIFT_POWER = 0.5;
-
     //George
     public static final double GEORGE_OFF = -0.085;
 
@@ -76,20 +75,22 @@ public class HardwareZeus {
         motorRight = hwMap.dcMotor.get("right");
         motorLeft = hwMap.dcMotor.get("left");
         motorLift = hwMap.dcMotor.get("lift");
+        jesus = hwMap.dcMotor.get("jesus");
 
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setDirection(DcMotor.Direction.FORWARD);
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        motorLeft.setDirection(DcMotor.Direction.FORWARD);
 
-        motorRight.setPower(0);
-        motorLeft.setPower(0);
-        motorLift.setPower(0);
+        motorRight.setPower(0.0);
+        motorLeft.setPower(0.0);
+        motorLift.setPower(0.0);
+        jesus.setPower(0.0);
 
         //Servo
+        george = hwMap.crservo.get("george");
         servo1 = hwMap.servo.get("servo1");
         servo2 = hwMap.servo.get("servo2");
-        george = hwMap.crservo.get("george");
 
         servo1.setDirection(Servo.Direction.FORWARD);
         servo2.setDirection(Servo.Direction.REVERSE);
