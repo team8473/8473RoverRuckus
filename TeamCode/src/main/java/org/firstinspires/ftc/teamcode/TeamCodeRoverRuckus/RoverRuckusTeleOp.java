@@ -70,6 +70,7 @@ public class RoverRuckusTeleOp extends OpMode {
         lift = Range.clip(-lift, -1, 1);
         zeus.motorLift.setPower(Range.clip(lift, -.6, .6));
 
+
         //Driving
         float right = -gamepad1.right_stick_y;
         float left = -gamepad1.left_stick_y;

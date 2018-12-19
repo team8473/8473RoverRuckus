@@ -1,23 +1,28 @@
 package org.firstinspires.ftc.teamcode.TeamCodeRoverRuckus;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import java.util.List;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@TeleOp(name = "Tensor Flow Test", group = "Test")
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
+
+@TeleOp(name = "Tensor Flow Auto", group = "Test")
 //@Disabled
-public class TensorFlowTest extends LinearOpMode {
+public class TensorFlowAuto extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
 
     private VuforiaLocalizer vuforia;
+
+    int goldMineralX = -1;
+    double angle = 0;
 
     private TFObjectDetector tfod;
 
@@ -28,13 +33,11 @@ public class TensorFlowTest extends LinearOpMode {
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
-        } else if (!ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
 
-        /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start tracking");
+        telemetry.addData("Ready", "Press > to start");
         telemetry.update();
+
         waitForStart();
 
         if (opModeIsActive()) {
@@ -47,44 +50,27 @@ public class TensorFlowTest extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                          } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                          } else {
-                            silverMineral2X = (int) recognition.getLeft();
-                          }
-                        }
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Left");
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Right");
-                          } else {
-                            telemetry.addData("Gold Mineral Position", "Center");
-                          }
-                        }
-                      } else if (updatedRecognitions.size() == 1) {
-                          int goldMineralX = -1;
-                          int silverMineral1X = -1;
-                          int silverMineral2X = -1;
+                      if (updatedRecognitions.size() != 0) {
+                          getAngle(updatedRecognitions);
+                          boolean angleTester = Math.min(0.5, Math.max(-0.5, angle)) == angle;
+
                           for (Recognition recognition : updatedRecognitions) {
-                              if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                  goldMineralX = (int) recognition.getLeft();
-                              } else if (silverMineral1X == -1) {
-                                  silverMineral1X = (int) recognition.getLeft();
-                              } else {
-                                  silverMineral2X = (int) recognition.getLeft();
+                              while (!angleTester) {
+                                  angle = recognition.estimateAngleToObject(AngleUnit.DEGREES);
+                                  if (angle > 0) {
+                                      telemetry.addData("Go Right", angle);
+                                  } else if (angle < 0) {
+                                      telemetry.addData("Go Left", angle);
+                                  }
+                                  telemetry.update();
                               }
                           }
-                          if (goldMineralX != -1 && silverMineral1X == -1 && silverMineral2X == -1) {
-                              telemetry.addData("Gold Mineral", "There");
-                          }
+                          telemetry.addData("Don't Move", angle);
+                          telemetry.update();
+                          sleep(2000);
+                          telemetry.addData("Hi", "Goodbye");
+                          telemetry.update();
+                          break;
                       }
                       telemetry.update();
                     }
@@ -112,5 +98,14 @@ public class TensorFlowTest extends LinearOpMode {
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
+    }
+
+    private void getAngle(List<Recognition> test) {
+        for (Recognition recognition : test) {
+            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                goldMineralX = (int) recognition.getLeft();
+                angle = recognition.estimateAngleToObject(AngleUnit.DEGREES);
+            }
+        }
     }
 }
